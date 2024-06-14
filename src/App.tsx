@@ -1,11 +1,16 @@
 import { useRef } from "react";
 // import "./App.css";
-import { Accodion, Dropdown, Popover, Popover2 } from "./components";
+import { Accodion, Dropdown, Popover } from "./components";
+import Pagination from "./components/pagination";
 function App() {
   const popoverAnchorRef = useRef<HTMLDivElement>(null);
   const popover2AnchorRef = useRef<HTMLButtonElement>(null);
   const handleClickDropdownItem = (value: string) => {
     console.log("Selected DropdownItem :: ", value);
+  };
+
+  const onChangePage = (page: number) => {
+    console.log({ page });
   };
   return (
     <>
@@ -56,11 +61,19 @@ function App() {
       <button style={{ marginLeft: "25px" }} ref={popover2AnchorRef}>
         Popover Anchor
       </button>
-      <Popover2.Root anchor={popover2AnchorRef}>
+      {/* <Popover2.Root anchor={popover2AnchorRef}>
         <Popover2.Portal>
           <h3>Portal-Content</h3>
         </Popover2.Portal>
-      </Popover2.Root>
+      </Popover2.Root> */}
+      <br />
+      <br />
+      <br />
+      <h2>Pagination</h2>
+      <Pagination.Root itemLength={121} onChangePage={onChangePage}>
+        <Pagination.Pages />
+        <Pagination.Navigator />
+      </Pagination.Root>
     </>
   );
 }
