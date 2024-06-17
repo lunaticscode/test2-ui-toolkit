@@ -1,7 +1,7 @@
 import { useRef } from "react";
-// import "./App.css";
 import { Accodion, Dropdown, Popover } from "./components";
 import Pagination from "./components/pagination";
+import Carousel from "./components/carousel";
 function App() {
   const popoverAnchorRef = useRef<HTMLDivElement>(null);
   const popover2AnchorRef = useRef<HTMLButtonElement>(null);
@@ -74,6 +74,31 @@ function App() {
         <Pagination.Pages />
         <Pagination.Navigator />
       </Pagination.Root>
+      <br />
+      <br />
+      <br />
+      <h2>Carousel</h2>
+      <Carousel.Root>
+        <Carousel.Container>
+          <Carousel.Item>
+            <h2>Item-1</h2>
+          </Carousel.Item>
+          <Carousel.Item>
+            <h2>Item-2</h2>
+          </Carousel.Item>
+          <Carousel.Item>
+            <h2>Item-3</h2>
+          </Carousel.Item>
+          <Carousel.Item>
+            <h2>Item-4</h2>
+          </Carousel.Item>
+          <Carousel.Item>
+            <h2>Item-5</h2>
+          </Carousel.Item>
+        </Carousel.Container>
+        <Carousel.Navigator />
+        <Carousel.Indicator />
+      </Carousel.Root>
     </>
   );
 }
