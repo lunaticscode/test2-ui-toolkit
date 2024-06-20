@@ -1,10 +1,15 @@
-import { PropsWithChildren, forwardRef } from "react";
+import { ReactNode, forwardRef } from "react";
 import { useCarouselContext } from "./Root";
 
-interface CarouselNavigatorProps extends PropsWithChildren {}
+interface CarouselNavigatorProps {
+  children?: (
+    handleClickPrev: () => void,
+    handleClickNext: () => void
+  ) => ReactNode;
+}
 const CarouselNavigator = forwardRef<HTMLDivElement, CarouselNavigatorProps>(
   (props, ref) => {
-    // const { children } = props;
+    const { children } = props;
     // 1) children 없으면 자체적으로 만든 element 제공
     // 2) children 있으면 클릭 이벤트에 대한 핸들러만 제공
 
@@ -15,7 +20,10 @@ const CarouselNavigator = forwardRef<HTMLDivElement, CarouselNavigatorProps>(
     const handleClickPrev = () => {
       handleClickNavigator?.(-1);
     };
-    return (
+
+    return children ? (
+      children(handleClickPrev, handleClickNext)
+    ) : (
       <div ref={ref}>
         <button onClick={handleClickPrev}>prev</button>
         <button onClick={handleClickNext}>next</button>
@@ -24,3 +32,10 @@ const CarouselNavigator = forwardRef<HTMLDivElement, CarouselNavigatorProps>(
   }
 );
 export default CarouselNavigator;
+
+// Accoridon
+// Carousel
+// Dropdown + Popover
+// Pagination
+// Calendar
+// Sortable

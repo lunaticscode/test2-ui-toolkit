@@ -96,7 +96,14 @@ function App() {
             <h2>Item-5</h2>
           </Carousel.Item>
         </Carousel.Container>
-        <Carousel.Navigator />
+        <Carousel.Navigator>
+          {(handleClickPrev, handleClickNext) => (
+            <>
+              <button onClick={handleClickPrev}>custom-prev</button>
+              <button onClick={handleClickNext}>custom-next</button>
+            </>
+          )}
+        </Carousel.Navigator>
         <Carousel.Indicator />
       </Carousel.Root>
     </>
