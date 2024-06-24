@@ -33,9 +33,8 @@ const CarouselNavigator = forwardRef<HTMLDivElement, CarouselNavigatorProps>(
 );
 export default CarouselNavigator;
 
-// Accoridon
-// Carousel
-// Dropdown + Popover
-// Pagination
 // Calendar
-// Sortable
+// <Root/> : Calendar가 가지고 있어야할 상태
+// <CurrentDate/> : 현재 날짜 표시
+// <Navigator/>
+// <Body/>
