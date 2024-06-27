@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Accodion, Dropdown, Popover } from "./components";
+import { Accodion, Calendar, Dropdown, Popover } from "./components";
 import Pagination from "./components/pagination";
 import Carousel from "./components/carousel";
 function App() {
@@ -106,6 +106,12 @@ function App() {
         </Carousel.Navigator>
         <Carousel.Indicator />
       </Carousel.Root>
+      <br />
+      <br />
+      <br />
+      <Calendar.Root>
+        <Calendar.Body />
+      </Calendar.Root>
     </>
   );
 }

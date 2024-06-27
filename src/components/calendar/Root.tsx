@@ -5,23 +5,36 @@ import {
   SetStateAction,
   Dispatch,
   FC,
+  PropsWithChildren,
 } from "react";
 
-type DateType = Date;
+export type DateType = Date;
 export type CalendarMode = "years" | "months" | "days";
 
-interface CalendarContextProps {
-  selectedDate?: DateType;
+export interface CalendarRootProps extends PropsWithChildren {
+  defaultDate?: DateType;
+  mode?: CalendarMode;
+  onDateChange?: (date: DateType) => void;
+  disabled?: boolean;
+}
+
+interface CalendarContextProps
+  extends Pick<CalendarRootProps, "disabled" | "mode"> {
+  selectedDate: DateType;
   setSelectedDate?: Dispatch<SetStateAction<DateType>>;
-  mode: CalendarMode;
-  setMode?: Dispatch<SetStateAction<CalendarMode>>;
+  setMode: Dispatch<SetStateAction<CalendarMode>>;
+  handleClickDate: (date: DateType) => void;
+  handleClickNavigator: (direction: -1 | 1) => void;
 }
 
 const CalendarContext = createContext<CalendarContextProps>({
+  disabled: undefined,
   selectedDate: new Date(),
   setSelectedDate: () => {},
   mode: "days",
   setMode: () => {},
+  handleClickDate: () => {},
+  handleClickNavigator: () => {},
 });
 
 export const useCalendarContext = () => {
@@ -32,25 +45,46 @@ export const useCalendarContext = () => {
   return context;
 };
 
-export interface CalendarRootProps {
-  defaultDate?: DateType;
-  mode?: CalendarMode;
-  onDateChange: (date: DateType) => void;
-}
+const mapModeToDecade: { [key in CalendarMode]: number } = {
+  years: 12,
+  months: 12,
+  days: 30,
+};
 
 const CalendarRoot: FC<CalendarRootProps> = (props) => {
-  const { defaultDate = new Date(), mode: modeProps = "days" } = props;
+  const {
+    defaultDate = new Date(),
+    mode: modeProps = "days",
+    disabled,
+    children,
+  } = props;
   const [selectedDate, setSelectedDate] = useState<DateType>(defaultDate);
   const [mode, setMode] = useState<CalendarMode>(modeProps);
+
+  const handleClickDate = (date: DateType) => {
+    if (disabled) return;
+    setSelectedDate(date);
+  };
+
+  const handleClickNavigator = (direction: -1 | 1) => {
+    // 현재 사용자가 선택한 Date 객체에 + direction
+    // => mode에 따라서 direction * n 이 결정
+    const changeDecade = mapModeToDecade[mode] * direction;
+    console.log(changeDecade);
+  };
 
   const contextValue: CalendarContextProps = {
     selectedDate,
     setSelectedDate,
     mode,
     setMode,
+    handleClickDate,
+    handleClickNavigator,
   };
   return (
-    <CalendarContext.Provider value={contextValue}></CalendarContext.Provider>
+    <CalendarContext.Provider value={contextValue}>
+      {children}
+    </CalendarContext.Provider>
   );
 };
 
